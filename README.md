@@ -59,7 +59,7 @@ Example:
     var Example = function(){
         // apples is empty. will automatically load first page, and any other page which is requested
         // by using the provided url template
-        this.apples = ko.observableArray().asPaged(10,'/url/to/get/apples?page={page}&pageSize={pageSize}');
+        this.apples = ko.observableArray().asPaged(10,'/url/to/get/apples?page={pg}&pageSize={pageSize}');
     };
 
 
@@ -96,14 +96,14 @@ In this case we simply pass in an object hash with whatever options we want to s
         <td><code>url</code></td>
         <td><code>String</code></td>
         <td>
-            A string template for a URL optionally containing any of the following formatters: <code>{page}</code>, <code>{pageSize}</code>, <code>{start}</code>, <code>{end}</code> which will then be replaced with the corresponding data.  For example, <code>'/resource/list/start/{start}/end/{end}'</code> will produce <code>'/resource/list/start/0/end/10'</code> on initialization with default options. <b>Note: async only</b>
+            A string template for a URL optionally containing any of the following formatters: <code>{pg}</code>, <code>{pageSize}</code>, <code>{start}</code>, <code>{end}</code> which will then be replaced with the corresponding data.  For example, <code>'/resource/list/start/{start}/end/{end}'</code> will produce <code>'/resource/list/start/0/end/10'</code> on initialization with default options. <b>Note: async only</b>
         </td>
     </tr>
     <tr>
         <td></td>
         <td><code>Function</code></td>
         <td>
-            A function which will be expected to receive a single parameter which is an object hash containing the properties <code>page</code>, <code>pageSize</code>, <code>start</code>, <code>end</code>, and return the to be requested to get the corresponding page of data. <b>Note: async only</b>
+            A function which will be expected to receive a single parameter which is an object hash containing the properties <code>pg</code>, <code>pageSize</code>, <code>start</code>, <code>end</code>, and return the to be requested to get the corresponding page of data. <b>Note: async only</b>
         </td>
     </tr>
     <tr>
