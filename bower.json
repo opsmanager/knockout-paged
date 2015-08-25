@@ -1,7 +1,7 @@
 {
   "name": "knockout-paged",
   "main": "knockout-paged.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/opsmanager/knockout-paged",
   "authors": [
     "Leland Richardson <leland.m.richardson@gmail.com>"
