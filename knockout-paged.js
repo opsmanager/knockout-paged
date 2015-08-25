@@ -2,8 +2,6 @@
  knockout-paged.js - A Pager Plugin for Knockout.JS
  Written By: Leland M. Richardson
 
-
-
  Desired API:
 
  .paged(Number pageSize);
@@ -21,24 +19,14 @@
 
  Object Configuration:
  .paged({
- pageSize: Number (10),
- cached: Boolean (true),
-
-
- url: String
-
-
+     pageSize: Number (10),
+     cached: Boolean (true),
+     url: String
  });
-
-
- */
-
-
+*/
 
 ; (function (ko, $) {
-
     // module scope
-
 
     // UTILITY METHODS
     // ------------------------------------------------------------------
@@ -106,8 +94,6 @@
         return cfg;
     };
 
-
-
     // PLUGIN DEFAULTS
     // ----------------------------------------------------------------------
     var _defaults = {
@@ -127,11 +113,7 @@
         mapFromServer: null,
         ajaxOptions: {}, //options to pass into jQuery on each request
         cache: true
-
-
-
     };
-
 
     // PLUGIN CONSTRUCTOR
     // -----------------------------------------------------------------------
@@ -143,14 +125,43 @@
         var cfg = config_init(_defaults, a, b),
 
         // current page
-            current = ko.observable(1),
+        current = ko.observable(1),
 
-            pagedItems = ko.computed(function () {
-                var pg = current(),
-                    start = cfg.pageSize * (pg - 1),
-                    end = start + cfg.pageSize;
-                return items().slice(start, end);
-            });
+        pagedItems = ko.computed(function () {
+            var pg = current(),
+                start = cfg.pageSize * (pg - 1),
+                end = start + cfg.pageSize;
+            return items().slice(start, end);
+        });
+
+        // range
+        totalCount = ko.observable(0);
+
+        totalPage = ko.computed(function() {
+            return Math.ceil(totalCount() / cfg.pageSize);
+        });
+
+        startOffset = ko.computed(function() {
+            return (current() - 1) * cfg.pageSize + 1;
+        });
+
+        endOffset = ko.computed(function() {
+            var end;
+            if (current() < totalPage()) {
+                end = current() * cfg.pageSize;
+            } else if (current() === totalPage()) {
+                end = totalCount();
+            }
+            return end;
+        });
+
+        isFirstPage = ko.computed(function () {
+            return current() === 1;
+        });
+
+        isLastPage = ko.computed(function() {
+            return current() === totalPage();
+        });
 
         // array of loaded
         var loaded = [true]; // set [0] to true just because.
@@ -221,11 +232,7 @@
         };
 
         next.enabled = ko.computed(function () {
-            if (cfg.async) {
-                return !(pagedItems().length < cfg.pageSize);
-            } else {
-                return items().length > cfg.pageSize * current();
-            }
+            return !isLastPage();
         });
 
         var previous = function () {
@@ -234,7 +241,7 @@
         };
 
         previous.enabled = ko.computed(function () {
-            return current() > 1;
+            return !isFirstPage();
         });
 
 
@@ -255,6 +262,12 @@
         // exported properties
         extend(items, {
             current: current,
+            totalCount: totalCount,
+            totalPage: totalPage,
+            startOffset: startOffset,
+            endOffset: endOffset,
+            isFirstPage: isFirstPage,
+            isLastPage: isLastPage,
             pagedItems: pagedItems,
             pageSize: cfg.pageSize,
             isLoading: isLoading, // might not need this if not async?
@@ -278,3 +291,4 @@
     ko.observableArray.fn.asPaged = asPaged;
 
 }(ko, $));
+
