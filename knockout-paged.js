@@ -228,12 +228,12 @@
             }
         });
 
-        var prev = function () {
-            if (prev.enabled())
+        var previous = function () {
+            if (previous.enabled())
                 goToPage(current() - 1);
         };
 
-        prev.enabled = ko.computed(function () {
+        previous.enabled = ko.computed(function () {
             return current() > 1;
         });
 
@@ -259,7 +259,7 @@
             pageSize: cfg.pageSize,
             isLoading: isLoading, // might not need this if not async?
             next: next,
-            prev: prev,
+            previous: previous,
             goToPage: goToPage,
             clearCache: clearCache,
             reset: reset,
