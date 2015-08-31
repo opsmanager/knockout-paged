@@ -142,7 +142,11 @@
         });
 
         startOffset = ko.computed(function() {
-            return (current() - 1) * cfg.pageSize + 1;
+            if (totalCount() > 0) {
+                return (current() - 1) * cfg.pageSize + 1;
+            } else {
+                return 0;
+            }
         });
 
         endOffset = ko.computed(function() {
@@ -151,6 +155,8 @@
                 end = current() * cfg.pageSize;
             } else if (current() === totalPage()) {
                 end = totalCount();
+            } else if (totalCount() == 0) {
+                end = 0;
             }
             return end;
         });
