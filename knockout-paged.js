@@ -100,10 +100,12 @@
         pageSize: 10,
         async: false, //TODO: make best guess based on other params passed?
 
-
         // async only options
         // --------------------------------------------
         getPage: null,
+
+        initialPage: 1,
+
         url: null, // this can be a string or a function ({pg: pg, pageSize: pageSize, start: start, end: end})
 
         ctor: null, //constructor to be used for
@@ -125,7 +127,7 @@
         var cfg = config_init(_defaults, a, b),
 
         // current page
-        current = ko.observable(1),
+        current = ko.observable(cfg.initialPage),
 
         pagedItems = ko.computed(function () {
             var pg = current(),
@@ -297,4 +299,3 @@
     ko.observableArray.fn.asPaged = asPaged;
 
 }(ko, $));
-
