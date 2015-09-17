@@ -99,17 +99,12 @@
     var _defaults = {
         pageSize: 10,
         async: false, //TODO: make best guess based on other params passed?
-
         // async only options
         // --------------------------------------------
         getPage: null,
-
         initialPage: 1,
-
         url: null, // this can be a string or a function ({pg: pg, pageSize: pageSize, start: start, end: end})
-
         ctor: null, //constructor to be used for
-
         // function to be applied on "success" callback to map
         // response to array. Signature: (Object response) -> (Array)
         mapFromServer: null,
